@@ -1,0 +1,30 @@
+PANDUAN PEMBARUAN APLIKASI ABSENSI
+
+Paket berisi file web terbaru dan source Edge Function untuk membuat akun karyawan.
+JANGAN memasukkan service_role key ke config.js atau file web.
+
+A. SQL tambahan (Supabase > SQL Editor)
+Jalankan satu kali. Jika policy bernama sama sudah ada, jangan buat duplikat.
+
+create policy "Admin dapat melihat profil semua karyawan"
+on public.profiles for select to authenticated
+using (public.is_admin());
+
+create policy "Admin dapat melihat foto absensi"
+on storage.objects for select to authenticated
+using (bucket_id = 'attendance-photos' and public.is_admin());
+
+B. Deploy Edge Function
+1. Supabase Dashboard > Edge Functions > Create a new function.
+2. Nama fungsi: create-employee.
+3. Isi file index.ts dengan source pada folder supabase/functions/create-employee di paket.
+4. Deploy.
+5. Pastikan secret server SUPABASE_SERVICE_ROLE_KEY tersedia di Edge Function secrets. Secret ini TIDAK boleh dimasukkan ke browser. SUPABASE_URL dan SUPABASE_ANON_KEY juga harus tersedia sebagai environment bawaan/secret.
+
+C. Deploy web
+Unggah file index.html, app.js, config.js, style.css, manifest.json, sw.js ke Cloudflare project yang sama, menggantikan versi lama. Source folder supabase hanya untuk Edge Function, jangan diunggah sebagai halaman web.
+
+D. Uji
+Login sebagai admin, logout/login kembali, coba buka foto pada riwayat, lalu buat akun karyawan uji. Password minimal 8 karakter. Berikan kredensial melalui jalur pribadi.
+
+Fitur foto menggunakan signed URL selama 60 detik. Pembuatan akun baru bekerja setelah Edge Function berhasil dideploy dan policy database sesuai.
