@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#14532d">
+  <meta name="description" content="Aplikasi absensi karyawan dengan foto selfie dan GPS">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <title>Absensi Karyawan</title>
+</head>
+<body>
+  <header class="top">
+    <div class="brand">AK</div>
+    <div><strong>Absensi Karyawan</strong><small>Foto selfie • GPS</small></div>
+    <button id="logoutBtn" class="btn ghost hidden">Keluar</button>
+  </header>
+
+  <main>
+    <section id="loginView" class="panel narrow">
+      <h1>Masuk</h1>
+      <p class="muted">Masuk menggunakan akun yang diberikan administrator.</p>
+      <form id="loginForm">
+        <label>Email<input id="email" type="email" autocomplete="username" required placeholder="nama@email.com"></label>
+        <label>Password<input id="password" type="password" autocomplete="current-password" required placeholder="Password"></label>
+        <button class="btn primary full" type="submit">Masuk</button>
+        <p id="loginMsg" class="message" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="appView" class="hidden">
+      <div class="welcome">
+        <div><span class="muted">Selamat datang,</span><h1 id="userName">Karyawan</h1></div>
+        <span id="rolePill" class="pill">Karyawan</span>
+      </div>
+
+      <section class="panel">
+        <h2>Catat absensi</h2>
+        <p class="muted">Pilih jenis absensi, ambil selfie, lalu izinkan akses lokasi.</p>
+        <div class="types">
+          <label class="choice"><input type="radio" name="attendanceType" value="masuk" checked><span>Absen Masuk</span></label>
+          <label class="choice"><input type="radio" name="attendanceType" value="pulang"><span>Absen Pulang</span></label>
+        </div>
+        <div class="camera-wrap">
+          <video id="video" autoplay playsinline muted></video>
+          <canvas id="canvas" class="hidden"></canvas>
+          <img id="photoPreview" class="hidden" alt="Pratinjau foto selfie">
+          <div id="cameraPlaceholder" class="camera-placeholder">Kamera belum dinyalakan</div>
+        </div>
+        <div class="actions">
+          <button id="startCameraBtn" class="btn secondary" type="button">Buka kamera</button>
+          <button id="takePhotoBtn" class="btn secondary" type="button" disabled>Ambil selfie</button>
+          <button id="retakeBtn" class="btn ghost hidden" type="button">Ulangi foto</button>
+        </div>
+        <p id="gpsStatus" class="muted small">Lokasi GPS akan diminta saat mengirim absensi.</p>
+        <button id="submitAttendanceBtn" class="btn primary full" type="button" disabled>Kirim absensi</button>
+        <p id="attendanceMsg" class="message" aria-live="polite"></p>
+      </section>
+
+      <section class="panel">
+        <div class="section-head"><h2>Riwayat absensi saya</h2><button id="refreshMineBtn" class="btn ghost smallbtn">Muat ulang</button></div>
+        <div id="myHistory" class="table-wrap"><p class="muted">Belum ada data.</p></div>
+      </section>
+
+      <section id="adminPanel" class="panel hidden">
+        <div class="section-head"><h2>Rekap seluruh karyawan</h2><button id="refreshAdminBtn" class="btn ghost smallbtn">Muat ulang</button></div>
+        <p class="muted small">Data yang tampil mengikuti hak akses admin di database.</p>
+        <div id="adminHistory" class="table-wrap"><p class="muted">Memuat data...</p></div>
+      </section>
+    </section>
+  </main>
+  <footer>Absensi Karyawan • Simpan bukti selfie dan lokasi dengan bertanggung jawab.</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+  </script>
+</body>
+</html>

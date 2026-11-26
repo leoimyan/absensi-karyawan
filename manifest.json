@@ -1,0 +1,10 @@
+{
+  "name": "Absensi Karyawan",
+  "short_name": "Absensi",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f3f6f4",
+  "theme_color": "#14532d",
+  "description": "Absensi karyawan dengan selfie dan GPS",
+  "icons": []
+}
