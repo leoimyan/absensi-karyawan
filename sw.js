@@ -1,4 +1,4 @@
-const CACHE = "absensi-pwa-v1";
+const CACHE = "absensi-pwa-v2";
 const CORE = ["./","./index.html","./style.css","./config.js","./app.js","./manifest.json"];
 self.addEventListener("install", e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE))));
 self.addEventListener("activate", e => e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));

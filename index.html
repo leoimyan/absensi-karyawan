@@ -63,9 +63,19 @@
       </section>
 
       <section id="adminPanel" class="panel hidden">
-        <div class="section-head"><h2>Rekap seluruh karyawan</h2><button id="refreshAdminBtn" class="btn ghost smallbtn">Muat ulang</button></div>
-        <p class="muted small">Data yang tampil mengikuti hak akses admin di database.</p>
-        <div id="adminHistory" class="table-wrap"><p class="muted">Memuat data...</p></div>
+        <h2>Menu Administrator</h2>
+        <section class="admin-subpanel"><h3>Tambah Karyawan</h3>
+          <p class="muted small">Admin menentukan password awal untuk karyawan.</p>
+          <form id="employeeForm">
+            <label>Nama lengkap<input id="employeeName" type="text" required maxlength="120" placeholder="Nama karyawan"></label>
+            <label>Email<input id="employeeEmail" type="email" required placeholder="karyawan@email.com"></label>
+            <label>Password awal<input id="employeePassword" type="password" required minlength="8" autocomplete="new-password" placeholder="Minimal 8 karakter"></label>
+            <button id="createEmployeeBtn" class="btn primary" type="submit">Buat akun karyawan</button><p id="employeeMsg" class="message" aria-live="polite"></p>
+          </form>
+        </section>
+        <section class="admin-subpanel"><div class="section-head"><h3>Riwayat Absensi</h3><button id="refreshAdminBtn" class="btn ghost smallbtn">Muat ulang</button></div>
+          <p class="muted small">Admin dapat membuka foto selfie dan lokasi absensi.</p><div id="adminHistory" class="table-wrap"><p class="muted">Memuat data...</p></div>
+        </section>
       </section>
     </section>
   </main>
